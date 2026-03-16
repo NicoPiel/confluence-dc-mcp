@@ -1,0 +1,33 @@
+[confluence]
+base_url = "https://confluence.example.com"
+# PAT loaded from environment variable CONFLUENCE_PAT
+service_account_username = "svc-llm-confluence"
+allowed_spaces = ["IT", "INFRA", "KB"]
+
+[confluence.cache]
+user_identity_ttl_seconds = 900    # 15 minutes
+page_restriction_ttl_seconds = 300 # 5 minutes
+
+[embedding]
+endpoint = "http://localhost:8080/v1/embeddings"
+model = "nomic-embed-text"
+batch_size = 32
+
+[qdrant]
+url = "http://localhost:6334"
+collection = "confluence_chunks"
+vector_dimension = 768
+
+[retrieval]
+top_k = 30
+top_k_after_filter = 8
+score_threshold = 0.5
+
+[crawl]
+schedule_cron = "*/30 * * * *"  # Every 30 minutes
+concurrent_page_fetches = 4
+concurrent_embeddings = 2
+
+[server]
+host = "127.0.0.1"
+port = 3000
